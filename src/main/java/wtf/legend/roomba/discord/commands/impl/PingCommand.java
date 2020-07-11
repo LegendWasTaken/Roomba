@@ -11,6 +11,7 @@ public class PingCommand implements DiscordCommand {
     }
 
     public void execute(MessageChannel channel, Member author, String command, String... args) {
+        channel.sendMessage("Pong").queue();
 
     }
 

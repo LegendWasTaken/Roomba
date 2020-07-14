@@ -42,22 +42,24 @@ public class DiscordClient {
     }
 
     public void commandEvent(MessageChannel channel, Member author, String command, String... args) {
-        for(int i=0; i<this.commands.length; i++) {
-            boolean isCommand = this.commands[i].getCommand().endsWith(command);
+        for (int i=0; i<this.commands.length; i++) {
+            boolean isCommand = this.commands[i].getCommand().equals(command);
             String[] aliases = this.commands[i].getAliases();
-            for(int a=0; a<aliases.length; a++) {
-                if(isCommand) break; // idk, should I do this somehow else? this is the only way I can think of off the top of my head to do it like this
-                if(aliases[a].equals(command)) isCommand = true;
+            for (int a=0; a<aliases.length; a++) {
+                if (aliases[a].equals(command)) {
+                    isCommand = true;
+                    break;
+                }
             }
 
-            if (!isCommand) break;
-
-            if(this.commands[i].requiredArgs() > args.length) {
-                channel.sendMessage(Lang.getNotEnoughArgsEmbed());
-            } else {
-                this.commands[i].execute(channel, author, command, args);
+            if (isCommand) {
+                if (this.commands[i].requiredArgs() > args.length) {
+                    channel.sendMessage(Lang.getNotEnoughArgsEmbed()).queue();
+                } else {
+                    this.commands[i].execute(channel, author, command, args);
+                }
+                break;
             }
-            break;
         }
     }
 

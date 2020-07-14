@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import wtf.legend.roomba.discord.commands.DiscordCommand;
+import wtf.legend.roomba.discord.commands.impl.InfoCommand;
 import wtf.legend.roomba.discord.commands.impl.PingCommand;
 import wtf.legend.roomba.discord.events.MessageEvent;
 
@@ -34,17 +35,29 @@ public class DiscordClient {
 
         /* Register Commands */
         this.commands = new DiscordCommand[] {
-                new PingCommand()
+                new PingCommand(),
+                new InfoCommand()
         };
 
     }
 
     public void commandEvent(MessageChannel channel, Member author, String command, String... args) {
         for(int i=0; i<this.commands.length; i++) {
-            if (this.commands[i].getCommand().equals(command)) {
-                this.commands[i].execute(channel, author, command, args);
-                break;
+            boolean isCommand = this.commands[i].getCommand().endsWith(command);
+            String[] aliases = this.commands[i].getAliases();
+            for(int a=0; a<aliases.length; a++) {
+                if(isCommand) break; // idk, should I do this somehow else? this is the only way I can think of off the top of my head to do it like this
+                if(aliases[a].equals(command)) isCommand = true;
             }
+
+            if (!isCommand) break;
+
+            if(this.commands[i].requiredArgs() > args.length) {
+                channel.sendMessage(Lang.getNotEnoughArgsEmbed());
+            } else {
+                this.commands[i].execute(channel, author, command, args);
+            }
+            break;
         }
     }
 

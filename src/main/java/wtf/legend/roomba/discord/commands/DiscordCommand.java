@@ -7,4 +7,5 @@ public interface DiscordCommand {
     String getCommand();
     void execute(MessageChannel channel, Member author, String command, String... args);
     int requiredArgs(); // Todo: Something with this
+    String[] getAliases();
 }

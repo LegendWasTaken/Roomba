@@ -2,17 +2,17 @@ package wtf.legend.roomba.discord.commands.impl;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import wtf.legend.roomba.discord.Lang;
 import wtf.legend.roomba.discord.commands.DiscordCommand;
 
-public class PingCommand implements DiscordCommand {
+public class InfoCommand implements DiscordCommand {
 
     public String getCommand() {
-        return "ping";
+        return "info";
     }
 
     public void execute(MessageChannel channel, Member author, String command, String... args) {
-        channel.sendMessage("Pong").queue();
-
+        channel.sendMessage(Lang.getInformationEmbed()).queue();
     }
 
     public int requiredArgs() {
@@ -20,6 +20,6 @@ public class PingCommand implements DiscordCommand {
     }
 
     public String[] getAliases() {
-        return new String[] {"test"};
+        return new String[] {"botinfo", "whatisthisbot", "information"};
     }
 }

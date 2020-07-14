@@ -19,19 +19,19 @@ public class MessageEvent extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        if(event.getChannel().getId().equals("678087993445187606")) {
+        if(event.getAuthor().getId().equals("597923739249934347")) {
             // whY dO yOu UsE A BoOlEAn InsTeAd Of pUtTiNg It DirEctlY iN thE iF sTatEmenT?
             // Simple answer, because it makes the code easier to read for people who don't know much code
             // And makes it easier on the eyes for people who want to read the code and learn from it.
             boolean validUser = !event.getAuthor().isBot();
-            boolean startsWithPrefix = event.getMessage().getContentStripped().startsWith(":");
+            boolean startsWithPrefix = event.getMessage().getContentStripped().startsWith("$");
             if(validUser && startsWithPrefix) {
                 MessageChannel channel = event.getChannel();
                 Member author = event.getMember();
 
                 // Yes I know I can do this better, I'm not going to because I'm lazy.
                 // If you want to complain about it, make a pull request and I'll review it.
-                String[] messages = event.getMessage().getContentStripped().replaceAll(":", "").split("/ +/");
+                String[] messages = event.getMessage().getContentStripped().replaceAll("\\$", "").split("/ +/");
 
                 // For the love of god and all things holy, I can't think of a nice way to implement this correctly
                 if(messages.length == 0) {

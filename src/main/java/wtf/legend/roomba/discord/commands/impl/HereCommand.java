@@ -17,4 +17,8 @@ public class HereCommand implements DiscordCommand {
     public int requiredArgs() {
         return 0;
     }
+
+    public String[] getAliases() {
+        return new String[] {};
+    }
 }

@@ -7,8 +7,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import wtf.legend.roomba.discord.commands.DiscordCommand;
-import wtf.legend.roomba.discord.commands.impl.InfoCommand;
-import wtf.legend.roomba.discord.commands.impl.PingCommand;
+import wtf.legend.roomba.discord.commands.impl.*;
 import wtf.legend.roomba.discord.events.MessageEvent;
 
 import javax.security.auth.login.LoginException;
@@ -35,9 +34,16 @@ public class DiscordClient {
 
         /* Register Commands */
         this.commands = new DiscordCommand[] {
-                new PingCommand(),
-                new InfoCommand()
+                new CreateRoomCommand(),
+                new HelpCommand(),
+                new HereCommand(),
+                new InfoCommand(),
+                new PingCommand()
         };
+
+        // UNchEcKEd CaSt AnD HarD cOdeD
+        // Cool I don't care.
+        ((HelpCommand) this.commands[1]).setCommands(this.commands);
 
     }
 
@@ -54,7 +60,7 @@ public class DiscordClient {
 
             if (isCommand) {
                 if (this.commands[i].requiredArgs() > args.length) {
-                    channel.sendMessage(Lang.getNotEnoughArgsEmbed()).queue();
+                    channel.sendMessage(Lang.getErrorEmbed(ErrorType.NOT_ENOUGH_ARGS)).queue();
                 } else {
                     this.commands[i].execute(channel, author, command, args);
                 }

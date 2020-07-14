@@ -10,6 +10,14 @@ public class PingCommand implements DiscordCommand {
         return "ping";
     }
 
+    public String getUsage() {
+        return "N/A";
+    }
+
+    public String getDescription() {
+        return "Pong!";
+    }
+
     public void execute(MessageChannel channel, Member author, String command, String... args) {
         channel.sendMessage("Pong").queue();
 

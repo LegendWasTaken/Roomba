@@ -10,6 +10,14 @@ public class CreateRoomCommand implements DiscordCommand {
         return "createroom";
     }
 
+    public String getUsage() {
+        return "createroom <website> [players] [preset]";
+    }
+
+    public String getDescription() {
+        return "Use this command to create a Tetris room!";
+    }
+
     public void execute(MessageChannel channel, Member author, String command, String... args) {
 
     }
@@ -19,6 +27,6 @@ public class CreateRoomCommand implements DiscordCommand {
     }
 
     public String[] getAliases() {
-        return new String[] {};
+        return new String[] {"cr", "makeroom", "blessmewithatetrisroom"};
     }
 }

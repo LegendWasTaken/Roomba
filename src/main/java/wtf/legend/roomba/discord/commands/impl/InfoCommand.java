@@ -11,6 +11,14 @@ public class InfoCommand implements DiscordCommand {
         return "info";
     }
 
+    public String getUsage() {
+        return "N/A";
+    }
+
+    public String getDescription() {
+        return "Gives you information about the bot!";
+    }
+
     public void execute(MessageChannel channel, Member author, String command, String... args) {
         channel.sendMessage(Lang.getInformationEmbed()).queue();
     }

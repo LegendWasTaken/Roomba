@@ -48,7 +48,7 @@ public class HereCommand implements DiscordCommand {
                     builder.append(args[i]).append(" ");
                 }
                 channel.sendMessage("@here").queue();
-                channel.sendMessage(Lang.getPingEmbed(author.getEffectiveName(), builder.toString())).queue();
+                //channel.sendMessage(Lang.getPingEmbed(author.getEffectiveName(), builder.toString())).queue();
             }
         }
     }

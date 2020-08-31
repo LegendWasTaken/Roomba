@@ -38,7 +38,8 @@ public class DiscordClient {
                 new HelpCommand(),
                 new HereCommand(),
                 new InfoCommand(),
-                new PingCommand()
+                new PingCommand(),
+                new DonateCommand()
         };
 
         // UNchEcKEd CaSt AnD HarD cOdeD

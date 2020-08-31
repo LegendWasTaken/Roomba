@@ -9,11 +9,13 @@ import java.util.Arrays;
 
 public class Lang {
 
-    public static String PREFIX = "=";
+    public static String PREFIX = ":";
 
     /* Error message */
     public static String NOT_ENOUGH_ARGS_ERROR = "You must specify more arguments!";
     public static String UNKNOWN_COMMAND_ERROR = "This command does not exist!";
+    public static String ROOM_CREATION_ERROR = "There was an unknown error creating this room!";
+    public static String UNKNOWN_ROOM_PROVIDER = "Unknown room provider!";
     public static String UNKNOWN_ERROR_ERROR = "An unknown error has occurred!";
 
     /* Help Embed */
@@ -32,12 +34,33 @@ public class Lang {
     public static int COMMAND_HELP_EMBED_G = 100;
     public static int COMMAND_HELP_EMBED_B = 200;
 
+    /* Create Room Embed */
+    public static String COMMAND_CREATE_ROOM_TITLE_CREATING = "**Creating Room**";
+    public static String ROOM_CREATED_TITLE = "**Click this to join the created room**";
+    public static int COMMAND_CREATE_ROOM_R = 100;
+    public static int COMMAND_CREATE_ROOM_G = 100;
+    public static int COMMAND_CREATE_ROOM_B = 200;
+
     /* Error Embeds */
     public static String ERROR_EMBED_TITLE = "Error";
     public static String ERROR_EMBED_FOOTER = "Roomba | Made by Legend#4321";
     public static int ERROR_EMBED_R = 255;
     public static int ERROR_EMBED_G = 20;
     public static int ERROR_EMBED_B = 20;
+
+    public static MessageEmbed getCreatedRoomEmbed(String url) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setTitle(ROOM_CREATED_TITLE, url);
+        builder.setColor(new Color(COMMAND_HELP_EMBED_R, COMMAND_HELP_EMBED_G, COMMAND_HELP_EMBED_B));
+        return builder.build();
+    }
+
+    public static MessageEmbed getCreatingRoomEmbed() {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setTitle(COMMAND_CREATE_ROOM_TITLE_CREATING);
+        builder.setColor(new Color(COMMAND_HELP_EMBED_R, COMMAND_HELP_EMBED_G, COMMAND_HELP_EMBED_B));
+        return builder.build();
+    }
 
     public static MessageEmbed getInformationEmbed() {
         EmbedBuilder builder = new EmbedBuilder();
@@ -58,6 +81,12 @@ public class Lang {
                 break;
             case UNKNOWN_COMMAND:
                 errorDescription = UNKNOWN_COMMAND_ERROR;
+                break;
+            case ROOM_CREATION:
+                errorDescription = ROOM_CREATION_ERROR;
+                break;
+            case UNKNOWN_ROOM_PROVIDER:
+                errorDescription = UNKNOWN_ROOM_PROVIDER;
                 break;
             case UNKNOWN_ERROR:
                 errorDescription = UNKNOWN_ERROR_ERROR;
@@ -84,6 +113,23 @@ public class Lang {
         }
         builder.setDescription(commandsString.toString());
         builder.setFooter(HELP_EMBED_FOOTER);
+        return builder.build();
+    }
+
+    public static MessageEmbed getCooldownEmbed(long cooldown) {
+        int seconds = (int) (cooldown / 1000) % 60 ;
+        int minutes = (int) ((cooldown / (1000*60)) % 60);
+        int hours   = (int) ((cooldown / (1000*60*60)) % 24);
+
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setTitle("You must wait before doing this again");
+        builder.setFooter("You must wait: " + hours + ":" + minutes + ":" + seconds);
+        return builder.build();
+    }
+
+    public static MessageEmbed getPingEmbed(String author, String game) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setTitle(author + " wants to play: " + game);
         return builder.build();
     }
 
